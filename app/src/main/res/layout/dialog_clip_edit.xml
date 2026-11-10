@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/startInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Start (seconds)"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/endInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="End (seconds)"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/speedInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Speed (0.25 to 4, 1 = normal)"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/volumeInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Volume (0 = mute, 1 = normal, 2 = double)"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/fadeInInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fade in (seconds)"
+            android:inputType="numberDecimal" />
+
+        <EditText
+            android:id="@+id/fadeOutInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fade out (seconds)"
+            android:inputType="numberDecimal" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Rotation" />
+
+        <Spinner
+            android:id="@+id/rotationSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</ScrollView>
