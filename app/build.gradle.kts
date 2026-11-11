@@ -9,10 +9,10 @@ android {
 
     defaultConfig {
         applicationId = "com.example.videoeditor"
-        minSdk = 26
+        minSdk = 29
         targetSdk = 34
-        versionCode = 4
-        versionName = "4.0"
+        versionCode = 5
+        versionName = "5.0"
     }
 
     buildFeatures { viewBinding = true }

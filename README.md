@@ -1,20 +1,15 @@
-# VideoEditor v4
+# VideoEditor v5
 
-Same features as v3, with three build changes:
-- FFmpeg comes from the maintained FFmpegKit fork (dev.ffmpegkit-maintained:ffmpeg:7.1.6)
-- Export uses MPEG-4 video, because the free FFmpeg build has no H.264 encoder
-- A GitHub Actions workflow builds the APK in the cloud (.github/workflows/build.yml)
+Changes from v4:
+- Exports are saved to Movies/VideoEditor (visible in Gallery and Files)
+- App icon (blue background, white play button)
+- gradle.properties with AndroidX enabled
+- minSdk 29 (Android 10 or newer), required for MediaStore saving
 
-## Get the APK without a computer
-1. Install Termux from F-Droid (the Play Store version is outdated).
-2. In Termux:
-   termux-setup-storage
-   pkg install git unzip
-   unzip ~/storage/downloads/VideoEditor_v4.zip -d ~
+## Install from Termux
+   cd ~
+   unzip -o ~/storage/downloads/VideoEditor_v5.zip -d ~/v5tmp
+   cp -r ~/v5tmp/VideoEditor_v5/. ~/VideoEditor_v4/
+   rm -rf ~/v5tmp
    cd ~/VideoEditor_v4
-   git init -b main && git add . && git commit -m "VideoEditor v4"
-   git remote add origin https://github.com/YOUR_USER/YOUR_REPO.git
-   git push -u origin main
-   (Create an empty repo on github.com first. Use a personal access token with repo scope as the password.)
-3. On github.com, open the repo's Actions tab, then the "Build APK" run, and download VideoEditor-debug-apk.
-4. Unzip it and install the APK. Allow "Install unknown apps" for your file manager when Android asks.
+   git add -A && git commit -m "v5" && git push origin main

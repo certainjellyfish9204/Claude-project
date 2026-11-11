@@ -2,7 +2,6 @@ package com.example.videoeditor
 
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ListView
@@ -159,8 +158,8 @@ class MainActivity : AppCompatActivity() {
             resolution = Resolution.values()[b.resSpinner.selectedItemPosition],
             quality = Quality.values()[b.qualSpinner.selectedItemPosition],
         )
-        val dir = getExternalFilesDir(Environment.DIRECTORY_MOVIES) ?: filesDir
-        val out = File(dir, "export_${System.currentTimeMillis()}.mp4").absolutePath
+        // FFmpeg writes to app cache first; GallerySaver then copies the file into Movies.
+        val out = File(cacheDir, "export_${System.currentTimeMillis()}.mp4").absolutePath
 
         val args = try {
             EditCommandBuilder.buildExport(clips, out, opts)
@@ -181,7 +180,19 @@ class MainActivity : AppCompatActivity() {
             }
             b.btnExport.isEnabled = true
             b.btnCancel.isEnabled = false
-            b.status.text = if (ok) "Saved: $out" else "Export failed or was cancelled"
+            if (!ok) {
+                b.status.text = "Export failed or was cancelled"
+                return@launch
+            }
+            b.status.text = "Saving to gallery..."
+            val uri = withContext(Dispatchers.IO) {
+                GallerySaver.saveToMovies(this@MainActivity, File(out))
+            }
+            b.status.text = if (uri != null) {
+                "Saved to Movies/VideoEditor. Check Gallery or Files > Movies."
+            } else {
+                "Export finished, but saving to Movies failed."
+            }
         }
     }
 
@@ -198,7 +209,7 @@ class MainActivity : AppCompatActivity() {
         text.toString().toDoubleOrNull() ?: fallback
 
     private fun copyUriToCache(uri: Uri, name: String): String {
-        // FFmpeg and ExoPlayer both work best with file paths, so copy the content:// URI into cache.
+        // FFmpeg and ExoPlayer both need real file paths, so copy the content:// URI into cache.
         val f = File(cacheDir, name)
         contentResolver.openInputStream(uri)!!.use { input ->
             f.outputStream().use { input.copyTo(it) }
